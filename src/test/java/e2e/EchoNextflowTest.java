@@ -17,8 +17,8 @@ import java.util.List;
  */
 public class EchoNextflowTest extends WesE2ERunAndMonitorWorkflow {
 
-    private static final WorkflowType WORKFLOW_TYPE = WorkflowType.NEXTFLOW;
-    private static final String WORKFLOW_TYPE_VERSION = "21.04.0";
+    private static final WorkflowType WORKFLOW_TYPE = WorkflowType.NFL;
+    private static final String WORKFLOW_TYPE_VERSION = "23.10.0";
     private static final String WORKFLOW_URL = "https://github.com/jb-adams/echo-nf";
 
     @DataProvider(name = "cases")

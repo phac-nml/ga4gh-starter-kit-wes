@@ -77,7 +77,7 @@ public class WesServiceInfo extends ServiceInfo {
     }
 
     public void updateServiceInfoFromWesServiceProps(WesServiceProps wesServiceProps) {
-        updateServiceInfoFromLanguageConfig(wesServiceProps, WorkflowType.NEXTFLOW);
+        updateServiceInfoFromLanguageConfig(wesServiceProps, WorkflowType.NFL);
         updateServiceInfoFromLanguageConfig(wesServiceProps, WorkflowType.WDL);
     }
 

@@ -12,7 +12,7 @@ public class WorkflowRunExecutorMediator {
 
     private final HashMap<WorkflowType, HashMap<WorkflowEngine, Callable<Void>>> methodMap = new HashMap<>() {{
         put(
-            WorkflowType.NEXTFLOW,
+            WorkflowType.NFL,
             new HashMap<WorkflowEngine, Callable<Void>>() {{
                 put(WorkflowEngine.NATIVE, () -> nextflowNative());
                 put(WorkflowEngine.SLURM, () -> nextflowSlurm());

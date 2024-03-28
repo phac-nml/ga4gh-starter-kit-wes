@@ -14,8 +14,8 @@ public class WesRunTest {
         return new Object[][] {
             {
                 "a0698d4b-62ab-408c-9ba1-dbe007d4813e",
-                WorkflowType.NEXTFLOW,
-                "21.04.0",
+                WorkflowType.NFL,
+                "23.10.0",
                 "https://github.com/jb-adams/echo-nf",
                 "{\"message_1\":\"HELLOWORLD\",\"message_2\":\"FOO\",\"message_3\":\"BAR\"}",
                 WorkflowEngine.NATIVE,

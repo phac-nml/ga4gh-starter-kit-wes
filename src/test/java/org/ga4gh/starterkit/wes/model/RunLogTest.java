@@ -17,8 +17,8 @@ public class RunLogTest {
             {
                 "2baa89d5-3ebc-4b5d-9453-e4cbf6aa4ca4",
                 new WesRequest() {{
-                    setWorkflowType(WorkflowType.NEXTFLOW);
-                    setWorkflowTypeVersion("21.04.0");
+                    setWorkflowType(WorkflowType.NFL);
+                    setWorkflowTypeVersion("23.10.0");
                     setWorkflowUrl("https://github.com/jb-adams/echo-nf");
                 }},
                 State.COMPLETE,

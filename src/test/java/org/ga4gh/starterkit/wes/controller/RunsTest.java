@@ -52,8 +52,8 @@ public class RunsTest extends AbstractTestNGSpringContextTests {
     public Object[][] getCreateRunCases() {
         return new Object[][] {
             {
-                WorkflowType.NEXTFLOW,
-                "21.04.0",
+                WorkflowType.NFL,
+                "23.10.0",
                 "https://github.com/jb-adams/echo-nf",
                 "{\"message_1\":\"HELLOWORLD\",\"message_2\":\"FOO\",\"message_3\":\"BAR\"}"
             }

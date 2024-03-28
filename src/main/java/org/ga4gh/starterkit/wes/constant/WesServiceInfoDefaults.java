@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Default values for the WES service info response 
+ * Default values for the WES service info response
  */
 public class WesServiceInfoDefaults {
 
@@ -93,6 +93,6 @@ public class WesServiceInfoDefaults {
     /**
      * Default nextflow version used
      */
-    public static final String NEXTFLOW_VERSION = "21.04.0";
+    public static final String NEXTFLOW_VERSION = "23.10.0";
 
 }

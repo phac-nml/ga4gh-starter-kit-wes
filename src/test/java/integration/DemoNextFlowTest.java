@@ -13,7 +13,7 @@ import java.net.http.HttpRequest.BodyPublishers;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Path;  
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.json.JSONObject;
@@ -65,7 +65,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @SpringBootTest
 @ContextConfiguration
 (
-    classes = 
+    classes =
     {
         WesServer.class,
         WesServerSpringConfig.class,
@@ -79,9 +79,9 @@ public class DemoNextFlowTest extends AbstractTestNGSpringContextTests
     // Define variables and constants
     private static final String DEFAULT_PUBLIC_URL = "http://localhost:4500/ga4gh/wes/v1/";
     private static final String CUSTOM_PUBLIC_URL = "http://localhost:7000/ga4gh/wes/v1/";
-    
-    private static final WorkflowType WORKFLOW_TYPE = WorkflowType.NEXTFLOW;
-    private static final String WORKFLOW_TYPE_VERSION = "21.04.0";
+
+    private static final WorkflowType WORKFLOW_TYPE = WorkflowType.NFL;
+    private static final String WORKFLOW_TYPE_VERSION = "23.10.0";
     private static final String WORKFLOW_URL = "https://github.com/jb-adams/echo-nf";
 
     @Autowired
@@ -243,33 +243,33 @@ public class DemoNextFlowTest extends AbstractTestNGSpringContextTests
     @Test(dataProvider = "cases")
     public void test(String requestURL,
                      String workflowParams,
-                     ExpectedLogValues expRunLog, 
+                     ExpectedLogValues expRunLog,
                      List<ExpectedLogValues> expTaskLogs,
-                     HashMap<String, 
-                     String> outputMd5Map) throws Exception 
+                     HashMap<String,
+                     String> outputMd5Map) throws Exception
     {
         HashMap<String, String> expOutputMd5Map = outputMd5Map;
 
         // submit the workflow
         RunId runId = executePostRequestAndAssert(requestURL, WORKFLOW_TYPE, WORKFLOW_TYPE_VERSION, WORKFLOW_URL, workflowParams);
 
-        // poll for status every 5s for workflow completion to maximum of 
+        // poll for status every 5s for workflow completion to maximum of
         // 12 retries (1min)
         Thread.sleep(5000);
         boolean runIncomplete = true;
-        int attempt = 0; 
+        int attempt = 0;
 
         RunStatus runStatus = getRunStatus(requestURL, runId.getRunId());
 
-        while (runIncomplete && attempt < 12) 
+        while (runIncomplete && attempt < 12)
         {
             runStatus = getRunStatus(requestURL, runId.getRunId());
 
-            if (runStatus.getState().equals(State.COMPLETE)) 
+            if (runStatus.getState().equals(State.COMPLETE))
             {
                 runIncomplete = false;
-            } 
-            else if (runStatus.getState().equals(State.EXECUTOR_ERROR)) 
+            }
+            else if (runStatus.getState().equals(State.EXECUTOR_ERROR))
             {
                 throw new Exception("workflow run errored unexpectedly");
             }
@@ -282,7 +282,7 @@ public class DemoNextFlowTest extends AbstractTestNGSpringContextTests
         if (runIncomplete) {
             throw new Exception("workflow run has not completed in expected time frame");
         }
-   
+
         Assert.assertEquals(runStatus.getRunId(), runId.getRunId());
         Assert.assertEquals(runStatus.getState(), State.COMPLETE);
 
@@ -302,13 +302,13 @@ public class DemoNextFlowTest extends AbstractTestNGSpringContextTests
 
         // assert 'taskLogs' attribute
         Assert.assertEquals(runLog.getTaskLogs().size(), expTaskLogs.size());
-        for (int i = 0; i < runLog.getTaskLogs().size(); i++) 
+        for (int i = 0; i < runLog.getTaskLogs().size(); i++)
         {
             WesLog taskLog = runLog.getTaskLogs().get(i);
             ExpectedLogValues expTaskLog = expTaskLogs.get(i);
             assertWesLogEquivalence(taskLog, expTaskLog);
         }
-        
+
         // assert 'outputs' attribute
         Map<String, String> outputs = runLog.getOutputs();
         Assert.assertEquals(outputs.size(), expOutputMd5Map.size());
@@ -319,10 +319,10 @@ public class DemoNextFlowTest extends AbstractTestNGSpringContextTests
     }
 
     private RunId executePostRequestAndAssert(String requestURL,
-                                              WorkflowType workflowType, 
-                                              String workflowTypeVersion, 
-                                              String workflowUrl, 
-                                              String workflowParams) throws Exception 
+                                              WorkflowType workflowType,
+                                              String workflowTypeVersion,
+                                              String workflowUrl,
+                                              String workflowParams) throws Exception
     {
         HttpClient client = HttpClient.newHttpClient();
 
@@ -344,18 +344,18 @@ public class DemoNextFlowTest extends AbstractTestNGSpringContextTests
                                           new BasicNameValuePair("workflow_params", workflowParams))
                         )
                     )
-                )   
+                )
             )
             .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
+
         RunId runId = objectMapper.readValue(response.body(), RunId.class);
         Assert.assertNotNull(runId.getRunId());
         return runId;
     }
 
-    private RunStatus getRunStatus(String requestURL, String runId) throws Exception 
+    private RunStatus getRunStatus(String requestURL, String runId) throws Exception
     {
         HttpClient client = HttpClient.newHttpClient();
 
@@ -371,7 +371,7 @@ public class DemoNextFlowTest extends AbstractTestNGSpringContextTests
         return runStatus;
     }
 
-    private RunLog getRunLog(String requestURL, String runId) throws Exception 
+    private RunLog getRunLog(String requestURL, String runId) throws Exception
     {
         HttpClient client = HttpClient.newHttpClient();
 
@@ -381,13 +381,13 @@ public class DemoNextFlowTest extends AbstractTestNGSpringContextTests
 
         HttpRequest request = requestBuilder.build();
         HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-        
+
         RunLog runLog = objectMapper.readValue(response.body(), RunLog.class);
         Assert.assertNotNull(runLog);
         return runLog;
     }
 
-    private String getLogOutput(String logURL) throws Exception 
+    private String getLogOutput(String logURL) throws Exception
     {
         HttpClient client = HttpClient.newHttpClient();
 
@@ -401,12 +401,12 @@ public class DemoNextFlowTest extends AbstractTestNGSpringContextTests
         return response.body();
     }
 
-    private LinkedMultiValueMap<String, String> parseQueryString(String queryString) throws Exception 
+    private LinkedMultiValueMap<String, String> parseQueryString(String queryString) throws Exception
     {
         LinkedMultiValueMap<String, String> queryMap = new LinkedMultiValueMap<>();
         String[] pairs = queryString.split("&");
 
-        for (String pair : pairs) 
+        for (String pair : pairs)
         {
             int idx = pair.indexOf("=");
             queryMap.add(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
@@ -415,7 +415,7 @@ public class DemoNextFlowTest extends AbstractTestNGSpringContextTests
         return queryMap;
     }
 
-    private void assertWesLogEquivalence(WesLog wesLog, ExpectedLogValues expLogValues) throws Exception 
+    private void assertWesLogEquivalence(WesLog wesLog, ExpectedLogValues expLogValues) throws Exception
     {
         Assert.assertEquals(wesLog.getName(), expLogValues.getExpName());
         Assert.assertEquals(wesLog.getCmd(), expLogValues.getExpCmd());
@@ -432,7 +432,7 @@ public class DemoNextFlowTest extends AbstractTestNGSpringContextTests
         Assert.assertEquals(stderrMd5, expLogValues.getExpStderrMd5()); //problem here
     }
 
-    private void assertOutputEquivalence(String outputURL, String expMd5) throws Exception 
+    private void assertOutputEquivalence(String outputURL, String expMd5) throws Exception
     {
         URL url = new URL(outputURL);
         String md5 = DigestUtils.md5DigestAsHex(url.openStream().readAllBytes());

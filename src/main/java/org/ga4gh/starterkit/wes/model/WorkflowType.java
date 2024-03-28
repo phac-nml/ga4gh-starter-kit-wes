@@ -6,11 +6,11 @@ package org.ga4gh.starterkit.wes.model;
  * <ul>
  *  <li>CWL: Common Workflow Language</li>
  *  <li>WDL: Workflow Description Language</li>
- *  <li>NEXTFLOW: Nextflow</li>
+ *  <li>NFL: Nextflow</li>
  * </ul>
  */
 public enum WorkflowType {
     CWL,
     WDL,
-    NEXTFLOW
+    NFL
 }

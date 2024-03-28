@@ -53,10 +53,10 @@ public class WesServiceInfoTest {
         WesServiceProps wesServiceProps = new WesServiceProps();
         si.updateServiceInfoFromWesServiceProps(wesServiceProps);
 
-        Assert.assertEquals(si.isWorkflowTypeSupported(WorkflowType.NEXTFLOW), true);
+        Assert.assertEquals(si.isWorkflowTypeSupported(WorkflowType.NFL), true);
         Assert.assertEquals(si.isWorkflowTypeSupported(WorkflowType.CWL), false);
-        Assert.assertEquals(si.isWorkflowTypeVersionSupported(WorkflowType.NEXTFLOW, "21.04.0"), true);
-        Assert.assertEquals(si.isWorkflowTypeVersionSupported(WorkflowType.NEXTFLOW, "1.0.0"), false);
+        Assert.assertEquals(si.isWorkflowTypeVersionSupported(WorkflowType.NFL, "23.10.0"), true);
+        Assert.assertEquals(si.isWorkflowTypeVersionSupported(WorkflowType.NFL, "1.0.0"), false);
         Assert.assertEquals(si.isWorkflowTypeVersionSupported(WorkflowType.CWL, "1.0.0"), false);
 
         Assert.assertEquals(si.isWorkflowEngineSupported(WorkflowEngine.NATIVE), true);

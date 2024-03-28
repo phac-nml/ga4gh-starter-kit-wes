@@ -10,13 +10,13 @@ public class NextflowLanguageConfig extends AbstractLanguageConfig {
     public NextflowLanguageConfig() {
         setEnabled(true);
         setVersions(new ArrayList<>() {{
-            add("21.04.0");
+            add("23.10.0");
         }});
         setEngine(WorkflowEngine.NATIVE);
     }
 
     @Override
     public WorkflowType getType() {
-        return WorkflowType.NEXTFLOW;
+        return WorkflowType.NFL;
     }
 }

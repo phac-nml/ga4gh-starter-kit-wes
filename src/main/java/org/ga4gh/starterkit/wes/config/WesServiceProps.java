@@ -23,7 +23,7 @@ public class WesServiceProps {
     public LanguageConfig getLanguageConfig(WorkflowType workflowType) {
         LanguageConfig languageConfig = null;
         switch (workflowType) {
-            case NEXTFLOW:
+            case NFL:
                 languageConfig = getLanguages().getNextflow();
                 break;
             case WDL:

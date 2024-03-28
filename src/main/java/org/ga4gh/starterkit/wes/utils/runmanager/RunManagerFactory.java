@@ -29,7 +29,7 @@ public class RunManagerFactory implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
     private static HashMap<WorkflowType, Class<? extends LanguageHandler>> typeSetupClasses = new HashMap<>(){{
-        put(WorkflowType.NEXTFLOW, NextflowLanguageHandler.class);
+        put(WorkflowType.NFL, NextflowLanguageHandler.class);
         put(WorkflowType.WDL, WdlLanguageHandler.class);
     }};
 
@@ -52,18 +52,18 @@ public class RunManagerFactory implements ApplicationContextAware {
         EngineConfig engineConfig = getWesServiceProps().getEngineConfigForLanguage(wesRun.getWorkflowType());
 
         RunManager runManager = applicationContext.getBean(RunManager.class);
-        
+
         LanguageHandler languageHandler = applicationContext.getBean(typeSetupClasses.get(wesRun.getWorkflowType()));
         EngineHandler engineHandler = applicationContext.getBean(engineSetupClasses.get(engineConfig.getType()));
-        
+
         languageHandler.setWesRun(wesRun);
         languageHandler.setLanguageConfig(languageConfig);
         languageHandler.setEngineHandler(engineHandler);
-        
+
         engineHandler.setWesRun(wesRun);
         engineHandler.setEngineConfig(engineConfig);
         engineHandler.setLanguageHandler(languageHandler);
-        
+
         runManager.setWesRun(wesRun);
         runManager.setLanguageHandler(languageHandler);
         runManager.setEngineHandler(engineHandler);
