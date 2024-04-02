@@ -10,7 +10,7 @@ public class NextflowLanguageConfig extends AbstractLanguageConfig {
     public NextflowLanguageConfig() {
         setEnabled(true);
         setVersions(new ArrayList<>() {{
-            add("23.10.0");
+            add("DSL2");
         }});
         setEngine(WorkflowEngine.NATIVE);
     }
